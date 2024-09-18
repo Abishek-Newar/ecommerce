@@ -35,7 +35,7 @@ const password = env.DB_PASS != undefined ? env.DB_PASS : "";
 
 export const sequelize: Sequelize = new Sequelize(db, username, password, {
   host: env.DB_HOST,
-  port: env.DB_PORT || 27017,
+  port: env.DB_PORT ,
   dialect: 'mysql',
   retry,
   define: {
