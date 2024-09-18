@@ -1,0 +1,51 @@
+import mongoose from "mongoose";
+import { env } from "../../infrastructure/env";
+import { Sequelize } from "sequelize";
+
+// MySQL (AivenCloud) connection using Sequelize
+const retry = {
+  max: Infinity,
+  report: (msg: string | Record<string, unknown>) => {
+    console.log("Unable to connect to database; retrying.");
+    console.log(msg);
+  },
+  match: [
+    /ConnectionError/,
+    /SequelizeConnectionError/,
+    /SequelizeConnectionRefusedError/,
+    /SequelizeHostNotFoundError/,
+    /SequelizeHostNotReachableError/,
+    /SequelizeInvalidConnectionError/,
+    /SequelizeConnectionTimedOutError/,
+    /SequelizeConnectionAcquireTimeoutError/,
+    /Connection terminated unexpectedly/,
+  ],
+};
+
+const dialectOptions = {
+  ssl: {
+    require: true,
+    rejectUnauthorized: false, 
+  },
+};
+
+const db = env.DB_NAME != undefined ? env.DB_NAME : "defaultdb";
+const username = env.DB_USER != undefined ? env.DB_USER : "";
+const password = env.DB_PASS != undefined ? env.DB_PASS : "";
+
+export const sequelize: Sequelize = new Sequelize(db, username, password, {
+  host: env.DB_HOST,
+  port: env.DB_PORT,
+  dialect: 'mysql',
+  retry,
+  define: {
+    freezeTableName: true,
+    timestamps: false,
+  },
+  logging: (msg) => console.log(msg),
+  dialectOptions,
+});
+
+export const ORM = {
+  sequelize,
+};
