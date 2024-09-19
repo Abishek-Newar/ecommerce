@@ -2,27 +2,36 @@ import express from "express";
 import { env } from "./infrastructure/env";
 import cors from "cors";
 import { createRouter } from "./infrastructure/routes";
-import { sequelize } from "./api/config/db";
+import { dbconnection, sequelize } from "./api/config/db";
 
 const app = express();
 
-/** create server module */
-    const port = env.APPPORT;
-    app.use(cors({
-        origin: '*',
-        methods: ["GET","HEAD","PUT","PATCH","POST","DELETE"],
-        credentials: true
-    }));
-    app.use(express.json());
+const port = env.APPPORT;
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    credentials: true,
+  })
+);
+app.use(express.json());
 
-    app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-        console.error(err.stack);
-        res.status(500).json({ error: 'Something went wrong!' }); 
-    });
+app.use(
+  (
+    err: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    console.error(err.stack);
+    res.status(500).json({ error: "Something went wrong!" });
+  }
+);
 
-  sequelize.authenticate();
-  app.use("/v1", createRouter());
+dbconnection();
+sequelize.authenticate();
+app.use("/v1", createRouter());
 
-  app.listen(port, () => {
-    console.log(`APP listening on port:${port}`);
-  });
+app.listen(port, () => {
+  console.log(`APP listening on port:${port}`);
+});
