@@ -1,4 +1,4 @@
-import { Constants } from "../config/constants";
+import { Constants } from "../constants";
 
 /** success created */
 export const successCreated = (res: any, msg: string): void => {

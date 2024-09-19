@@ -2,6 +2,28 @@ import mongoose from "mongoose";
 import { env } from "../../infrastructure/env";
 import { Sequelize } from "sequelize";
 
+// MongoDB connection using mongoose
+export const dbconnection = (): void => {
+  const options = {
+    serverSelectionTimeoutMS: 10000,
+    connectTimeoutMS: 20000, 
+  };
+  mongoose
+    .connect(env.MONGO_URL!, options)
+    .then((res) => {
+      console.log(`Mongo DB Connected Successfully. ` + env.MONGO_URL);
+    })
+    .catch((err) => {
+      console.error(`Something went wrong in Mongo DB Connection`, err);
+    });
+
+  mongoose.set("debug", (collectionName, method, query, doc) => {
+    console.log(`${collectionName}.${method}`, JSON.stringify(query), doc);
+  });
+
+  const db = mongoose.connection;
+};
+
 // MySQL (AivenCloud) connection using Sequelize
 const retry = {
   max: Infinity,
