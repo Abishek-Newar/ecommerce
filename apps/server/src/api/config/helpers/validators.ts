@@ -1,16 +1,28 @@
 import { object, string, number, mixed } from "yup";
 
+export const UserOtpGenerateValidate = object({
+  body: object({
+    email: string()
+      .email("Invalid email format")
+      .max(20, "Email cannot exceed 20 characters")
+      .required("Email is required"),
+  }),
+});
+
 export const UserSignupValidate = object({
   body: object({
+    otp: number().
+    required("OTP is required"),
+
     username: string()
       .min(3, "Username must be at least 3 characters long")
-      .max(30, "Username cannot exceed 30 characters")
+      .max(20, "Username cannot exceed 20 characters")
       .matches(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores")
       .required("Username is required"),
 
     email: string()
       .email("Invalid email format")
-      .max(30, "Email cannot exceed 30 characters")
+      .max(20, "Email cannot exceed 20 characters")
       .required("Email is required"),
 
     password: string()
@@ -21,13 +33,15 @@ export const UserSignupValidate = object({
       //   "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character"
       // )
       .required("Password is required"),
-  }),
+    })
+
 });
 
 export const UserSigninValidate = object({
   body: object({
     email: string()
       .email("Invalid email format")
+      .max(20, "Email cannot exceed 20 characters")
       .required("Email is required"),
 
     password: string()  
@@ -36,3 +50,10 @@ export const UserSigninValidate = object({
       .required("Password is required"),
   }),
 });
+
+export const UserLogoutValidate = object({
+  body: object({
+    userId : string()
+    .required("User ID is required"),
+  }),
+})

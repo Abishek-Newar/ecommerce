@@ -6,15 +6,9 @@ import bcrypt from "bcrypt";
 import { env } from "../../../infrastructure/env";
 import {sendEmail} from "../../lib/mailer";
 
-// API endpoint to generate OTP and send email
 export const UserOtpGenerate = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return ErrorResponse(res, 'Please provide a valid email.');
-    }
 
     const existingUser = await userSignup.findOne({ email });
     if (existingUser) {
@@ -22,22 +16,14 @@ export const UserOtpGenerate = async (req: Request, res: Response) => {
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000);
-
-    // Send OTP to the user's email
     await sendEmail({ email, OTP: otp });
 
-    // Save OTP to the database for later verification
     await userSignup.updateOne(
       { email },
       { otp, otpExpiration: Date.now() + 15 * 60 * 1000 },
       { upsert: true }
     );
-
-    return SuccessResponse(
-      res,
-      'OTP sent to your email. Please verify to complete registration.',
-      { email, otp }
-    );
+    return SuccessResponse(res, 'OTP sent to your email. Please verify to complete registration.', { email });
   } catch (error) {
     console.error('Error during signup initiation:', error);
     return ErrorResponse(res, 'An error occurred during signup initiation.');
@@ -66,9 +52,8 @@ export const UserSignup = async (req: Request, res: Response) => {
     user.username = username;
     user.otp = undefined; 
     user.otpExpiration = undefined; 
-    const savedUser = await user.save();
 
-    // Generate JWT token
+    const savedUser = await user.save();
     const token = jwt.sign({ id: savedUser._id.toHexString() }, env.JWT_SECRET, { expiresIn: '2d' });
 
     return SuccessResponse(res, "User registered successfully", { user: savedUser, token });
@@ -77,7 +62,6 @@ export const UserSignup = async (req: Request, res: Response) => {
     return ErrorResponse(res, "An error occurred during OTP verification.");
   }
 }
-
 
 export const UserSignin = async (req: Request, res: Response) => {
   try {
@@ -98,9 +82,33 @@ export const UserSignin = async (req: Request, res: Response) => {
 
     const token = jwt.sign({ id: user._id.toHexString() }, env.JWT_SECRET, { expiresIn: '2d' });
 
+    await userSignup.updateOne(
+      { _id: user._id }, 
+      { $set: { status: 1 } } 
+    );
+
     return SuccessResponse(res, "User logged in successfully", {user, token});
   } catch (error) {
     console.error(error);
     return ErrorResponse(res, "An error occurred while logging in.");
   }
 };
+
+export const UserLogout = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body;
+    if (!userId) {
+      return ErrorResponse(res, "User ID is required.");
+    }
+
+    await userSignup.updateOne(
+      { _id: userId },
+      { $set: { status: 0 } }
+    );
+
+    return SuccessResponse(res, "User logged out successfully.", { userId });
+  } catch (error) {
+    console.error(error);
+    return ErrorResponse(res, "An error occurred while logging out.");
+  }
+}

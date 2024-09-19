@@ -16,7 +16,6 @@ export async function sendEmail({ email, OTP }: EmailOptions): Promise<void> {
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
-      secure: true,
       auth: {
         user: env.MAILER_EMAIL,
         pass: env.MAILER_PASS,
@@ -27,8 +26,8 @@ export async function sendEmail({ email, OTP }: EmailOptions): Promise<void> {
       from: env.MAILER_EMAIL,
       to: email,
       subject: 'PASSWORD RECOVERY',
-      html: `<p>Give permission to change your BluOrn account password.<br/>
-            Do not share the OTP with anyone.</p> 
+      html: `<p>Give permission to change your BluOrn account password.
+             Do not share the OTP with anyone.</p> 
             <p>Hello, ${email}</p> 
             <p>Your OTP: ${OTP}</p>`,
     };
