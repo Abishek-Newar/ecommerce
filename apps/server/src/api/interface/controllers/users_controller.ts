@@ -24,6 +24,12 @@ export const UserOtpGenerate = async (req: Request, res: Response) => {
       { upsert: true }
     );
     return SuccessResponse(res, 'OTP sent to your email. Please verify to complete registration.', { email });
+
+    return SuccessResponse(
+      res,
+      'OTP sent to your email. Please verify to complete registration.',
+      { email, }
+    );
   } catch (error) {
     console.error('Error during signup initiation:', error);
     return ErrorResponse(res, 'An error occurred during signup initiation.');
