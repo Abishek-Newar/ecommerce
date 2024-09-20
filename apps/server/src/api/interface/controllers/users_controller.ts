@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import { env } from "../../../infrastructure/env";
 import {sendEmail} from "../../lib/mailer";
 
+
 export const UserOtpGenerate = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
@@ -15,19 +16,20 @@ export const UserOtpGenerate = async (req: Request, res: Response) => {
       return ErrorResponse(res, 'Email is already registered.');
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000);
-    await sendEmail({ email, OTP: otp });
+    const otp = Math.floor(1000 + Math.random() * 9000);
+    await Promise.all([
+      sendEmail({ email, OTP: otp }),
+      userSignup.updateOne(
+        { email }, 
+        { otp, otpExpiration: Date.now() + 15 * 60 * 1000 },  
+        { upsert: true } 
+      )
+    ]);
 
-    await userSignup.updateOne(
-      { email },
-      { otp, otpExpiration: Date.now() + 15 * 60 * 1000 },
-      { upsert: true }
-    );
     return SuccessResponse(res, 'OTP sent to your email. Please verify to complete registration.', { email });
-
   } catch (error) {
-    console.error('Error during signup initiation:', error);
-    return ErrorResponse(res, 'An error occurred during signup initiation.');
+    console.error('Error during OTP generation:', error);
+    return ErrorResponse(res, 'An error occurred while generating the OTP.');
   }
 };
 
