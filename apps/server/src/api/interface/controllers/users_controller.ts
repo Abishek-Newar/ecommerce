@@ -17,14 +17,14 @@ export const UserOtpGenerate = async (req: Request, res: Response) => {
     }
 
     const otp = Math.floor(1000 + Math.random() * 9000);
-    await Promise.all([
-      sendEmail({ email, OTP: otp }),
-      userSignup.updateOne(
+   
+    await sendEmail({ email, OTP: otp }),
+    await userSignup.updateOne(
         { email }, 
-        { otp, otpExpiration: Date.now() + 15 * 60 * 1000 },  
+        { otp, otpExpiration: Date.now() + 10 * 60 * 1000},  
         { upsert: true } 
-      )
-    ]);
+    )
+
 
     return SuccessResponse(res, 'OTP sent to your email. Please verify to complete registration.', { email });
   } catch (error) {
@@ -55,6 +55,7 @@ export const UserSignup = async (req: Request, res: Response) => {
     user.username = username;
     user.otp = undefined; 
     user.otpExpiration = undefined; 
+    user.status = 1; 
 
     const savedUser = await user.save();
     const token = jwt.sign({ id: savedUser._id.toHexString() }, env.JWT_SECRET, { expiresIn: '2d' });

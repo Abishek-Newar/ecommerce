@@ -8,7 +8,7 @@ const userSignupSchema = new mongoose.Schema(
         insert_date_time: { type: Date, default: Date.now },
         otp: { type: Number },
         otpExpiration: { type: Number },
-        status: { type: Number},
+        status: { type: Number, default: 0 }, // by default user is inactive
     },
     {
         collection: "signup_user",

@@ -11,7 +11,9 @@ type envType = {
   DB_USER: string,
   DB_PASS: string,
   MAILER_EMAIL: any,
-  MAILER_PASS: any
+  MAILER_PASS: any,
+  ADMIN_EMAIL: any,
+  ADMIN_PASS: any,
 }
 
 export const env:envType = {
@@ -25,4 +27,6 @@ export const env:envType = {
   DB_PASS: process.env.DB_PASS || "",
   MAILER_EMAIL: process.env.MAILER_EMAIL || "",
   MAILER_PASS: process.env.MAILER_PASS || "",
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL || "",
+  ADMIN_PASS: process.env.ADMIN_PASS || "",
 };

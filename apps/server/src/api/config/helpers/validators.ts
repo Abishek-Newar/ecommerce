@@ -57,3 +57,41 @@ export const UserLogoutValidate = object({
     .required("User ID is required"),
   }),
 })
+
+export const AdminSigninValidate = object({
+  body: object({
+    email: string()
+      .email("Invalid email format")
+      .max(20, "Email cannot exceed 20 characters")
+      .required("Email is required"),
+
+    password: string()
+      .min(6, "Password must be at least 6 characters long")
+      .max(20, "Password cannot exceed 20 characters")
+      .required("Password is required"),
+  }),
+})
+
+export const AddProductValidate = object({
+  body: object({
+    productName: string()
+      .min(3, "Product name must be at least 3 characters long")
+      .max(20, "Product name cannot exceed 20 characters"),
+
+    description: string()
+      .min(3, "Description must be at least 3 characters long")
+      .max(50, "Description cannot exceed 50 characters"),
+
+    price: number()
+      .min(1, "Price must be at least 1"),
+
+    image: string(),
+
+    category: string()
+      .min(1, "Category must be at least 1 characters long")
+      .max(20, "Category cannot exceed 20 characters"),
+
+    quantity: number()
+      .min(1, "Quantity must be at least 1"),
+  }),
+})
