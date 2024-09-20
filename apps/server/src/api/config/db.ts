@@ -1,6 +1,22 @@
 import mongoose from "mongoose";
 import { env } from "../../infrastructure/env";
 import { Sequelize } from "sequelize";
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
+
+// Firebase connection
+const firebaseConfig = {
+  apiKey: "AIzaSyCTaOn_fgI6r1nd7u0GBGRPgmAUJMs1zyw",
+  authDomain: "ecommerce-e06a8.firebaseapp.com",
+  projectId: "ecommerce-e06a8",
+  storageBucket: "ecommerce-e06a8.appspot.com",
+  messagingSenderId: "43157792764",
+  appId: "1:43157792764:web:286977fe5a83d303b77479",
+  measurementId: "G-WQFWBQRHHB"
+};
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
 // MongoDB connection using mongoose
 export const dbconnection = (): void => {
@@ -68,6 +84,4 @@ export const sequelize: Sequelize = new Sequelize(db, username, password, {
   dialectOptions,
 });
 
-export const ORM = {
-  sequelize,
-};
+export { storage };

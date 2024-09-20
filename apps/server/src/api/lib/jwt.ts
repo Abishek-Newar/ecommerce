@@ -6,11 +6,11 @@ interface AuthenticatedRequest extends Request {
     userId?: string; 
   }
 
-const Auth = (req:AuthenticatedRequest, res: Response, next: NextFunction) => {
+export const Auth = (req:AuthenticatedRequest, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-        return res.status(401).json({ msg: "No token provided" });
+        return res.status(401).json({ msg: "Authorization required in headers" });
     }
 
     const token = authHeader.split(' ')[1]; 
@@ -20,9 +20,9 @@ const Auth = (req:AuthenticatedRequest, res: Response, next: NextFunction) => {
             return res.status(401).json({ msg: "Invalid token" });
         }
 
-        req.userId = decoded.id; // Ensure your token includes the user ID
+        req.userId = decoded.id; 
         next();
     });
 };
 
-module.exports = Auth;
+

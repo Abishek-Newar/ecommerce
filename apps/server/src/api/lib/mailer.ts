@@ -9,27 +9,24 @@ interface EmailOptions {
   OTP: any;
 }
 
-console.log('Mailer_EMAIL:', env.MAILER_EMAIL);
-console.log('Mailer_PASS:', env.MAILER_PASS);
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: env.MAILER_EMAIL,
+    pass: env.MAILER_PASS,
+  },
+});
 
 export async function sendEmail({ email, OTP }: EmailOptions): Promise<void> {
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      secure: true,
-      auth: {
-        user: env.MAILER_EMAIL,
-        pass: env.MAILER_PASS,
-      },
-    });
 
     const mailConfig = {
       from: env.MAILER_EMAIL,
       to: email,
       subject: 'PASSWORD RECOVERY',
-      html: `<p>Give permission to change your BluOrn account password.<br/>
-            Do not share the OTP with anyone.</p> 
-            <p>Hello, ${email}</p> 
+      html: `<p>Give permission to change your BluOrn account password.
+             Do not share the OTP with anyone.</p> 
+            <p>Hello, ${email} your OTP valid for 10 minutes</p> 
             <p>Your OTP: ${OTP}</p>`,
     };
 
