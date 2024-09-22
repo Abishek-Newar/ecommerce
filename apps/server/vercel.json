@@ -1,6 +1,0 @@
-{
-   
-        "rewrites": [{ "source": "/v1/(.*)", "destination": "/dist/index.js" }]
-      
-  }
-  
