@@ -1,9 +1,5 @@
 {
-  "version": 2,
-  "routes": [
-    {
-      "src": "/v1/(.*)",
-      "dest": "./dist/index.js"
-    }
+  "rewrites": [
+    { "source": "/v1/(.*)", "destination": "./dist/index.js" }
   ]
 }
