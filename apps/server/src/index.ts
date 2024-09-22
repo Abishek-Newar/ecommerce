@@ -32,6 +32,10 @@ dbconnection();
 sequelize.authenticate();
 app.use("/v1", createRouter());
 
+app.get("/", (req, res) => {
+  res.send("it works!");
+})
+
 app.listen(port, () => {
   console.log(`APP listening on port:${port}`);
 });
