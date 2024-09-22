@@ -6,9 +6,6 @@ const route = express.Router();
 
 export const UserRoute = (router: express.Router): void => {
 
-    router.get("/user/", (req, res) => {
-        res.send("user route is working")
-    })
     // for user to signup generate otp
     router.post("/user/generateOtp", validateRequest(UserOtpGenerateValidate), UserOtpGenerate);
 
