@@ -14,6 +14,13 @@ type envType = {
   MAILER_PASS: any,
   ADMIN_EMAIL: any,
   ADMIN_PASS: any,
+  FIREBASE_API_KEY: any,
+  FIREBASE_AUTH_DOMAIN: any,
+  FIREBASE_PROJECT_ID: any,
+  FIREBASE_STORAGE_BUCKET: any,
+  FIREBASE_MESSAGING_SENDER_ID: any,
+  FIREBASE_APP_ID: any,
+  FIREBASE_MEASUREMENT_ID: any
 }
 
 export const env:envType = {
@@ -29,4 +36,12 @@ export const env:envType = {
   MAILER_PASS: process.env.MAILER_PASS || "",
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || "",
   ADMIN_PASS: process.env.ADMIN_PASS || "",
+  FIREBASE_API_KEY: process.env.FIREBASE_API_KEY || "",
+  FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN || "",
+  FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID ,
+  FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET || "",
+  FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID || "",
+  FIREBASE_APP_ID: process.env.FIREBASE_APP_ID || "",
+  FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID || "",
+
 };
