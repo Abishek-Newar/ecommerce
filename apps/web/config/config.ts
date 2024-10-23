@@ -1,0 +1,1 @@
+export const BACKEND_URL = "https://stacky-ecomm-api.vercel.app/v1/"

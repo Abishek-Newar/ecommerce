@@ -11,3 +11,8 @@ type SignUpDataType = {
     username: string,
     password: string
 }
+
+type SignInDataType = {
+    email: string,
+    password: string
+}
