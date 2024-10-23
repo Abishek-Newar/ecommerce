@@ -12,6 +12,7 @@ app.use(
     origin: "*",
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
+    allowedHeaders: "Content-Type, Authorization",
   })
 );
 app.use(express.json());
@@ -30,7 +31,12 @@ app.use(
 
 dbconnection();
 sequelize.authenticate();
+app.get("/", (req, res) => {
+  res.send("user route is working")
+})
 app.use("/v1", createRouter());
+
+
 
 app.listen(port, () => {
   console.log(`APP listening on port:${port}`);

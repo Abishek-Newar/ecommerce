@@ -6,13 +6,13 @@ import { getStorage } from "firebase/storage";
 
 // Firebase connection
 const firebaseConfig = {
-  apiKey: "AIzaSyCTaOn_fgI6r1nd7u0GBGRPgmAUJMs1zyw",
-  authDomain: "ecommerce-e06a8.firebaseapp.com",
-  projectId: "ecommerce-e06a8",
-  storageBucket: "ecommerce-e06a8.appspot.com",
-  messagingSenderId: "43157792764",
-  appId: "1:43157792764:web:286977fe5a83d303b77479",
-  measurementId: "G-WQFWBQRHHB"
+  apiKey: env.FIREBASE_API_KEY,
+  authDomain: env.FIREBASE_AUTH_DOMAIN,
+  projectId: env.FIREBASE_PROJECT_ID,
+  storageBucket: env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID, 
+  appId: env.FIREBASE_APP_ID,
+  measurementId: env.FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
@@ -67,7 +67,7 @@ const dialectOptions = {
   },
 };
 
-const db = env.DB_NAME != undefined ? env.DB_NAME : "defaultdb";
+const db = env.DB_NAME != undefined ? env.DB_NAME : "";
 const username = env.DB_USER != undefined ? env.DB_USER : "";
 const password = env.DB_PASS != undefined ? env.DB_PASS : "";
 

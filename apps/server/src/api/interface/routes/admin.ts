@@ -11,7 +11,4 @@ export const adminRoute = (router: express.Router): void => {
 
     router.post("/admin/addProduct", Auth, validateRequest(AddProductValidate), multiple, addProduct);
 
-  
-
-
 }
