@@ -42,6 +42,7 @@ const page = () => {
         password: signUpData.password
       })
       console.log(response)
+      //@ts-ignore
       localStorage.setItem("token",response.token)
       setTimeout(()=>{
         router.push("/")
