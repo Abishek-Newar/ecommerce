@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import { LabeledInput } from '../auth/page'
 import { BACKEND_URL } from '../../config/config';
+import LabeledInput from '../../components/LabledInput';
 
 const page = () => {
     const [signinData,setSigninData] = React.useState({

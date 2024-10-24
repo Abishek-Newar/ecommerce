@@ -1,11 +1,12 @@
 "use client"
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { CustomButton } from '../auth/page'
+
 import { Content } from '../../provider/ContextProvider'
 import { BACKEND_URL } from '../../config/config'
 import axios from 'axios'
 import { toast } from 'sonner'
+import CustomButton from '../../components/CustomButton'
 
 const page = () => {
   const [otp, setOtp] = React.useState(new Array(4).fill(""))

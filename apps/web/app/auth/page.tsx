@@ -5,6 +5,8 @@ import { BACKEND_URL } from '../../config/config'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { Content } from '../../provider/ContextProvider'
+import LabeledInput from '../../components/LabledInput'
+import CustomButton from '../../components/CustomButton'
 
 export default function Auth(){
   const router = useRouter()
@@ -119,14 +121,7 @@ export default function Auth(){
 }
 
 
-export const CustomButton = ({ children, onClick }: { children: React.ReactNode, onClick: (e: any) => void }) => {
-  return <button onClick={onClick} className='bg-white h-10 rounded-lg uppercase font-semibold'>{children}</button>
-}
 
-export const LabeledInput = ({ type, placeholder, title, id, onChange }: LabeledInputProps) => {
-  return <label htmlFor={id} className='w-full'>
-    <p className='text-white uppercase mb-2'>{title}:</p>
-    <input className='h-9 w-full rounded-md p-2' type={type} placeholder={placeholder} id={id} onChange={onChange} />
-  </label>
-}
+
+
 
