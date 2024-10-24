@@ -86,7 +86,7 @@ const Auth = () => {
               <LabeledInput type='email' placeholder='abi@gmail.com' id='email' title='Email' onChange={(e) => { handleChange(e.target.value, "email", "signup") }} />
               <LabeledInput type='password' placeholder='' id='pass' title='Password' onChange={(e) => { handleChange(e.target.value, "password", "signup") }} />
             </div>
-            <Button onClick={(e: any) => handleSubmit("signup", e)}>Sign Up</Button>
+            <CustomButton onClick={(e: any) => handleSubmit("signup", e)}>Sign Up</CustomButton>
             <p className='text-white'>Already have a account? <a onClick={() => setSigninPosition(true)} className='cursor-pointer underline underline-offset-2'>SignIn</a></p>
           </form>
         </div>
@@ -99,7 +99,7 @@ const Auth = () => {
             <div className='flex flex-col gap-4'>
               <LabeledInput type='email' placeholder='abi@gmail.com' id='email' title='Email' onChange={(e) => { handleChange(e.target.value, "email", "signin") }} />
               <LabeledInput type='password' placeholder='' id='pass' title='Password' onChange={(e) => { handleChange(e.target.value, "password", "signin") }} />
-              <Button onClick={(e: any) => handleSubmit("signin", e)} >Sign In</Button>
+              <CustomButton onClick={(e: any) => handleSubmit("signin", e)} >Sign In</CustomButton>
             </div>
             <p className='text-white'>Don't have a accunt? <a onClick={() => setSigninPosition(false)} className='cursor-pointer underline underline-offset-2'>Signup</a></p>
           </form>
@@ -119,7 +119,7 @@ const Auth = () => {
 }
 
 
-export const Button = ({ children, onClick }: { children: React.ReactNode, onClick: (e: any) => void }) => {
+export const CustomButton = ({ children, onClick }: { children: React.ReactNode, onClick: (e: any) => void }) => {
   return <button onClick={onClick} className='bg-white h-10 rounded-lg uppercase font-semibold'>{children}</button>
 }
 
