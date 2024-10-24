@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { Button } from '../auth/page'
+import { CustomButton } from '../auth/page'
 import { Content } from '../../provider/ContextProvider'
 import { BACKEND_URL } from '../../config/config'
 import axios from 'axios'
@@ -86,7 +86,7 @@ const page = () => {
             ))
           }
         </div>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <CustomButton onClick={handleSubmit}>Submit</CustomButton>
       </div>
     </main>
   )

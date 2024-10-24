@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { Content } from '../../provider/ContextProvider'
 
-const Auth = () => {
+export default function Auth(){
   const router = useRouter()
 
   const authContext = React.useContext(Content);
@@ -130,4 +130,3 @@ export const LabeledInput = ({ type, placeholder, title, id, onChange }: Labeled
   </label>
 }
 
-export default Auth
